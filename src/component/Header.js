@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import logo from "./logo.png";
 
 function Header() {
   const navigate = useNavigate();
@@ -14,7 +15,13 @@ function Header() {
         backgroundColor: "#b3cefc",
       }}
     >
-      <h1 onClick={navMain}>KPT</h1>
+      <img
+        src={logo}
+        alt="logo"
+        width="80"
+        onClick={navMain}
+        style={{ cursor: "pointer" }}
+      />
       <a href="/login" style={{ textDecoration: "none", color: "#000000" }}>
         로그인
       </a>
