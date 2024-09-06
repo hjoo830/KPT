@@ -1,4 +1,40 @@
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 function Signup() {
+  const [userId, setUserId] = useState("");
+  const [password, setPassword] = useState("");
+  const [passwordConfirm, setPasswordConfirm] = useState("");
+  const [nickname, setNickname] = useState("");
+  const navigate = useNavigate();
+
+  const handleSignup = (e) => {
+    e.preventDefault();
+
+    // 비밀번호 일치 확인
+    if (password !== passwordConfirm) {
+      alert("비밀번호가 일치하지 않습니다.");
+      return;
+    }
+
+    // 기존 사용자 확인
+    const existingUser = localStorage.getItem(userId);
+    if (existingUser) {
+      alert("이미 존재하는 사용자입니다.");
+      return;
+    }
+
+    // 사용자 정보 저장
+    const user = {
+      userId,
+      password,
+      nickname,
+    };
+    localStorage.setItem(userId, JSON.stringify(user));
+    alert("회원가입이 완료되었습니다!");
+    navigate("/login");
+  };
+
   return (
     <div
       style={{
@@ -8,6 +44,7 @@ function Signup() {
         backgroundColor: "#ffffff",
         boxShadow: "10px 10px 10px rgba(237, 237, 237, 0.9)",
         width: "80%",
+        maxWidth: "600px",
         margin: "0 auto",
         marginTop: "50px",
         textAlign: "center",
@@ -15,6 +52,7 @@ function Signup() {
     >
       <h1>회원가입</h1>
       <form
+        onSubmit={handleSignup}
         style={{
           display: "flex",
           flexDirection: "column",
@@ -26,6 +64,8 @@ function Signup() {
           type="text"
           name="userId"
           placeholder="아이디"
+          value={userId}
+          onChange={(e) => setUserId(e.target.value)}
           style={{
             border: "1px solid #dfdfdf",
             borderRadius: "10px",
@@ -37,6 +77,8 @@ function Signup() {
           type="password"
           name="password"
           placeholder="비밀번호"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
           style={{
             border: "1px solid #dfdfdf",
             borderRadius: "10px",
@@ -48,6 +90,8 @@ function Signup() {
           type="password"
           name="passwordConfirm"
           placeholder="비밀번호 확인"
+          value={passwordConfirm}
+          onChange={(e) => setPasswordConfirm(e.target.value)}
           style={{
             border: "1px solid #dfdfdf",
             borderRadius: "10px",
@@ -59,6 +103,8 @@ function Signup() {
           type="text"
           name="nickname"
           placeholder="닉네임"
+          value={nickname}
+          onChange={(e) => setNickname(e.target.value)}
           style={{
             border: "1px solid #dfdfdf",
             borderRadius: "10px",
