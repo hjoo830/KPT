@@ -2,9 +2,10 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import logo from "./logo.png";
 
-function Header() {
+function Header({ isLoggedIn, onLogout }) {
   const navigate = useNavigate();
   const navMain = () => navigate("/");
+
   return (
     <header
       style={{
@@ -22,9 +23,36 @@ function Header() {
         onClick={navMain}
         style={{ cursor: "pointer" }}
       />
-      <a href="/login" style={{ textDecoration: "none", color: "#000000" }}>
-        로그인
-      </a>
+      {isLoggedIn ? (
+        <div>
+          <a
+            href="#"
+            style={{
+              textDecoration: "none",
+              color: "#000000",
+              marginRight: "20px",
+            }}
+          >
+            새 KPT 작성
+          </a>
+          <a
+            href="#"
+            onClick={() => {
+              localStorage.removeItem("loggedInUserId"); // 로그인된 사용자 ID 삭제
+              onLogout();
+              alert("로그아웃 되었습니다!");
+              navigate("/");
+            }}
+            style={{ textDecoration: "none", color: "#000000" }}
+          >
+            로그아웃
+          </a>
+        </div>
+      ) : (
+        <a href="/login" style={{ textDecoration: "none", color: "#000000" }}>
+          로그인
+        </a>
+      )}
     </header>
   );
 }
