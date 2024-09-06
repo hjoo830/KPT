@@ -8,14 +8,35 @@ function Section({ type, memos }) {
       return "문제점";
     } else if (type === "Try") {
       return "시도할 점";
-    } 
+    }
   };
-  
+
   return (
     <div>
-      <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
-        <h3>{type}</h3>
-        <p style={{ fontSize: "small" }}>{getText()}</p>
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+        }}
+      >
+        <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
+          <h3>{type}</h3>
+          <p style={{ fontSize: "small" }}>{getText()}</p>
+        </div>
+        <a
+          href="#"
+          style={{
+            textDecoration: "none",
+            color: "#000000",
+            borderRadius: "5px",
+            backgroundColor: "#fcfcfc",
+            padding: "5px 10px",
+            cursor: "pointer",
+          }}
+        >
+          작성
+        </a>
       </div>
       <div
         style={{
