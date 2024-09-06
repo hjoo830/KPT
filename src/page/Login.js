@@ -1,4 +1,36 @@
-function Login() {
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+function Login({ onLogin }) {
+  const [userId, setUserId] = useState("");
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+
+    // localStorage에서 사용자 정보 가져오기
+    const storedUser = localStorage.getItem(userId);
+    if (!storedUser) {
+      alert("존재하지 않는 사용자입니다.");
+      return;
+    }
+
+    const user = JSON.parse(storedUser);
+
+    // 비밀번호 확인
+    if (user.password !== password) {
+      alert("비밀번호가 틀렸습니다.");
+      return;
+    }
+
+    // 로그인 성공
+    localStorage.setItem("loggedInUserId", userId); // 로그인된 userId 저장
+    onLogin();
+    alert(`${user.nickname}님 환영합니다!`);
+    navigate("/");
+  };
+
   return (
     <div
       style={{
@@ -8,6 +40,7 @@ function Login() {
         backgroundColor: "#ffffff",
         boxShadow: "10px 10px 10px rgba(237, 237, 237, 0.9)",
         width: "80%",
+        maxWidth: "600px",
         margin: "0 auto",
         marginTop: "50px",
         textAlign: "center",
@@ -15,6 +48,7 @@ function Login() {
     >
       <h1>로그인</h1>
       <form
+        onSubmit={handleLogin}
         style={{
           display: "flex",
           flexDirection: "column",
@@ -26,6 +60,8 @@ function Login() {
           type="text"
           name="userId"
           placeholder="아이디"
+          value={userId}
+          onChange={(e) => setUserId(e.target.value)}
           style={{
             border: "1px solid #dfdfdf",
             borderRadius: "10px",
@@ -37,6 +73,8 @@ function Login() {
           type="password"
           name="password"
           placeholder="비밀번호"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
           style={{
             border: "1px solid #dfdfdf",
             borderRadius: "10px",
