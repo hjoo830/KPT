@@ -1,24 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { AuthProvider } from "./AuthContext.js";
+import "./App.css";
+
+import Header from "./component/Header.js";
+import MainPage from "./page/MainPage.js";
+import Login from "./page/Login.js";
+import Signup from "./page/Signup.js";
+import KptDetailPage from "./page/KptDetailPage.js";
+import CreateKpt from "./page/CreateKpt.js";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <AuthProvider>
+      <BrowserRouter>
+        <Header />
+        <Routes>
+          <Route path="/" element={<MainPage />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/kpt/:id" element={<KptDetailPage />} />
+          <Route path="/createkpt" element={<CreateKpt />} />
+        </Routes>
+      </BrowserRouter>
+    </AuthProvider>
   );
 }
 
