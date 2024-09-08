@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import AuthContext from "../AuthContext";
 import logo from "./logo.png";
 
-function Header({ isLoggedIn, onLogout }) {
+function Header() {
+  const { isLoggedIn, logout } = useContext(AuthContext);
   const navigate = useNavigate();
   const navMain = () => navigate("/");
 
@@ -26,7 +28,7 @@ function Header({ isLoggedIn, onLogout }) {
       {isLoggedIn ? (
         <div>
           <a
-            href="#"
+            href="/createkpt"
             style={{
               textDecoration: "none",
               color: "#000000",
@@ -38,8 +40,7 @@ function Header({ isLoggedIn, onLogout }) {
           <a
             href="#"
             onClick={() => {
-              localStorage.removeItem("loggedInUserId"); // 로그인된 사용자 ID 삭제
-              onLogout();
+              logout();
               alert("로그아웃 되었습니다!");
               navigate("/");
             }}
