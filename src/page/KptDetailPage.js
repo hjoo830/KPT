@@ -1,10 +1,17 @@
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import KptItem from "../component/KptItem";
-import data from "../data.json";
 
 function KptDetailPage() {
   const { id } = useParams(); // URL에서 id를 가져옴
-  const selectedItem = data.find((item) => item.id === parseInt(id)); // id에 해당하는 데이터를 찾음
+  const [selectedItem, setSelectedItem] = useState(null);
+
+  useEffect(() => {
+    // localStorage에서 kptData 불러오기
+    const storedData = JSON.parse(localStorage.getItem("kptData")) || [];
+    const item = storedData.find((item) => item.id === parseInt(id));
+    setSelectedItem(item); // 해당 id의 항목을 상태로 설정
+  }, [id]);
 
   if (!selectedItem) {
     return <p>해당 항목을 찾을 수 없습니다.</p>;
@@ -26,7 +33,7 @@ function KptDetailPage() {
         <h2 style={{ maxWidth: "85%" }}>{selectedItem.title}</h2>
         <p>{selectedItem.date}</p>
       </div>
-      <KptItem kpt={selectedItem.kpt} />
+      <KptItem kpt={selectedItem.kpt} kptId={selectedItem.id} />
     </div>
   );
 }

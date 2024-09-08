@@ -1,7 +1,7 @@
 import React from "react";
 import Section from "./Section";
 
-function KptItem({ kpt }) {
+function KptItem({ kpt, kptId }) {
   return (
     <div
       style={{
@@ -20,12 +20,12 @@ function KptItem({ kpt }) {
                 ? "#ffc7c2"
                 : section.type === "Try"
                 ? "#bce3ff"
-                : "#fcd19c", 
+                : "#fcd19c",
             padding: "0 20px",
             borderRadius: "5px",
           }}
         >
-          <Section type={section.type} memos={section.memo} />
+          <Section type={section.type} memos={section.memo} kptId={kptId} />
         </div>
       ))}
     </div>
