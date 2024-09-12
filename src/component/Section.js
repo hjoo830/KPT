@@ -116,7 +116,7 @@ function Section({ type, memos, kptId }) {
           <h3>{type}</h3>
           <p style={{ fontSize: "small" }}>{getText()}</p>
         </div>
-        <a
+        <p
           onClick={handleWriteClick}
           style={{
             textDecoration: "none",
@@ -129,7 +129,7 @@ function Section({ type, memos, kptId }) {
           }}
         >
           작성
-        </a>
+        </p>
       </div>
       <div
         style={{
