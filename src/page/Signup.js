@@ -1,6 +1,5 @@
 import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import AuthContext from "../AuthContext";
 
 function Signup() {
   const [userId, setUserId] = useState("");
@@ -8,7 +7,6 @@ function Signup() {
   const [passwordConfirm, setPasswordConfirm] = useState("");
   const [nickname, setNickname] = useState("");
   const navigate = useNavigate();
-  const { login } = useContext(AuthContext);
 
   const handleSignup = (e) => {
     e.preventDefault();
@@ -34,7 +32,6 @@ function Signup() {
     };
     localStorage.setItem(userId, JSON.stringify(user));
     localStorage.setItem("loggedInUserId", userId);
-    login();
     alert("회원가입이 완료되었습니다!");
     navigate("/login");
   };
