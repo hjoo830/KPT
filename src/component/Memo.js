@@ -1,4 +1,13 @@
-function Memo({ id, nickname, content, onMemoClick, isEditing }) {
+function Memo({
+  id,
+  nickname,
+  content,
+  onMemoClick,
+  onEditClick,
+  onDeleteClick,
+  loggedInUserNickname,
+  showButtons,
+}) {
   return (
     <div
       style={{
@@ -9,11 +18,12 @@ function Memo({ id, nickname, content, onMemoClick, isEditing }) {
         justifyContent: "space-between",
         width: "105%",
         alignItems: "center",
+        cursor: loggedInUserNickname === nickname ? "pointer" : "default", // 자신의 메모에만 커서 변경
       }}
-      onClick={() => onMemoClick(id)}
+      onClick={onMemoClick}
     >
       {nickname}: {content}
-      {isEditing && (
+      {loggedInUserNickname === nickname && showButtons && (
         <div style={{ display: "flex", gap: "5px" }}>
           <button
             style={{
@@ -24,6 +34,7 @@ function Memo({ id, nickname, content, onMemoClick, isEditing }) {
               cursor: "pointer",
               fontSize: "12px",
             }}
+            onClick={onEditClick}
           >
             수정
           </button>
@@ -36,6 +47,7 @@ function Memo({ id, nickname, content, onMemoClick, isEditing }) {
               cursor: "pointer",
               fontSize: "12px",
             }}
+            onClick={onDeleteClick}
           >
             삭제
           </button>

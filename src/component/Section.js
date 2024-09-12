@@ -6,6 +6,8 @@ function Section({ type, memos, kptId }) {
   const [newMemo, setNewMemo] = useState("");
   const [memoList, setMemoList] = useState(memos);
   const [editingMemoId, setEditingMemoId] = useState(null); // 현재 수정 중인 메모의 ID
+  const [editingContent, setEditingContent] = useState("");
+  const [clickedMemoId, setClickedMemoId] = useState(null);
 
   // 현재 로그인된 사용자의 닉네임 불러오기
   const loggedInUserNickname = localStorage.getItem("loggedInUserNickname");
@@ -34,8 +36,46 @@ function Section({ type, memos, kptId }) {
 
     const updatedMemoList = [...memoList, newMemoItem];
     setMemoList(updatedMemoList); // 상태 업데이트
+    updateLocalStorage(updatedMemoList);
 
-    // 로컬스토리지 업데이트
+    // 입력값 초기화 및 작성 모드 해제
+    setNewMemo("");
+    setIsWriting(false);
+  };
+
+  const handleEditClick = (id) => {
+    setEditingMemoId(id); // 수정 버튼 클릭 시 해당 메모의 ID 저장
+    const memoToEdit = memoList.find((memo) => memo.id === id);
+    setEditingContent(memoToEdit.content); // 기존 내용을 입력창에 표시
+  };
+
+  const handleDeleteClick = (id) => {
+    const updatedMemoList = memoList.filter((memo) => memo.id !== id);
+    setMemoList(updatedMemoList);
+    updateLocalStorage(updatedMemoList);
+  };
+
+  const handleEditMemoChange = (e) => {
+    setEditingContent(e.target.value);
+  };
+
+  const handleEditMemoSubmit = (id) => {
+    const updatedMemoList = memoList.map((memo) =>
+      memo.id === id ? { ...memo, content: editingContent } : memo
+    );
+    setMemoList(updatedMemoList);
+    updateLocalStorage(updatedMemoList);
+    setEditingMemoId(null); // 수정 후 수정 모드 해제
+  };
+
+  const handleMemoClick = (id, nickname) => {
+    if (nickname === loggedInUserNickname) {
+      setClickedMemoId((prevId) => (prevId === id ? null : id));
+    }
+  };
+
+  // 로컬스토리지 업데이트
+  const updateLocalStorage = (updatedMemoList) => {
     const storedData = JSON.parse(localStorage.getItem("kptData")) || [];
     const updatedData = storedData.map((item) => {
       if (item.id === kptId) {
@@ -51,16 +91,6 @@ function Section({ type, memos, kptId }) {
       return item;
     });
     localStorage.setItem("kptData", JSON.stringify(updatedData));
-
-    // 입력값 초기화 및 작성 모드 해제
-    setNewMemo("");
-    setIsWriting(false);
-  };
-
-  const handleMemoClick = (id) => {
-    setEditingMemoId((prev) => (prev === id ? null : id)); // 클릭 시 수정/삭제 모드 토글
-    // 마지막으로 클릭된 메모의 id인 prev와 지금 클릭한 id가 같으면 이미 수정 모드이므로 null로 바꿔서 수정모드 종료
-    // 다르면 새로 클린한 메모이므로 그 메모의 id를 editingMemoId로 저장
   };
 
   const getText = () => {
@@ -107,14 +137,71 @@ function Section({ type, memos, kptId }) {
         }}
       >
         {memoList.map((memo) => (
-          <Memo
-            key={memo.id}
-            id={memo.id}
-            nickname={memo.nickname}
-            content={memo.content}
-            onMemoClick={handleMemoClick}
-            isEditing={editingMemoId === memo.id} // 클릭된 메모만 수정, 삭제 버튼 표시
-          />
+          <div key={memo.id}>
+            {editingMemoId === memo.id ? (
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  width: "105%",
+                  marginBottom: "10px",
+                }}
+              >
+                <input
+                  type="text"
+                  value={editingContent}
+                  onChange={handleEditMemoChange}
+                  style={{
+                    width: "70%",
+                    borderRadius: "5px",
+                    border: "none",
+                    padding: "7px",
+                  }}
+                />
+                <div style={{ display: "flex", gap: "3px" }}>
+                  <button
+                    onClick={() => handleEditMemoSubmit(memo.id)}
+                    style={{
+                      border: "none",
+                      color: "#000000",
+                      borderRadius: "5px",
+                      backgroundColor: "#fcfcfc",
+                      padding: "3px 5px",
+                      cursor: "pointer",
+                      minWidth: "30px",
+                    }}
+                  >
+                    수정
+                  </button>
+                  <button
+                    onClick={() => setEditingMemoId(null)}
+                    style={{
+                      border: "none",
+                      color: "#000000",
+                      borderRadius: "5px",
+                      backgroundColor: "#fcfcfc",
+                      padding: "3px 5px",
+                      cursor: "pointer",
+                      minWidth: "30px",
+                    }}
+                  >
+                    취소
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <Memo
+                id={memo.id}
+                nickname={memo.nickname}
+                content={memo.content}
+                loggedInUserNickname={loggedInUserNickname}
+                onMemoClick={() => handleMemoClick(memo.id, memo.nickname)}
+                onEditClick={() => handleEditClick(memo.id)}
+                onDeleteClick={() => handleDeleteClick(memo.id)}
+                showButtons={clickedMemoId === memo.id} // 클릭된 메모만 버튼 표시
+              />
+            )}
+          </div>
         ))}
       </div>
       {isWriting && (
