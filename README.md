@@ -1,70 +1,36 @@
-# Getting Started with Create React App
+# 🌟 KPT 관리 시스템
+이 프로젝트는 Keep(잘한 점), Problem(문제점), Try(시도할 점)의 약자로, 프로젝트나 작업 후 회고하는 데 사용하는 KPT를 관리하는 시스템이다. 사용자는 로그인 여부에 따라 KPT 목록과 메모를 조회하거나, 직접 KPT와 메모를 작성 및 관리할 수 있다.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## 💡 주요 기능
+### 1. 🔐 로그인 및 회원가입
+- 로그인하지 않은 상태에서도 KPT 목록과 세부 내용을 조회할 수 있다.
+- 로그인을 하면 메모를 작성, 수정, 삭제할 수 있다.
+- 회원가입 시에는 아이디, 비밀번호, 비밀번호 확인, 닉네임을 입력받는다.
+- 이미 존재하는 아이디로는 회원가입할 수 없다.
+- 회원가입에 성공하면 로그인 화면으로 이동한다.
+- 로그인하지 않은 상태에서 작성 버튼을 누르면 로그인 후 이용 가능하다는 메시지가 뜬다.
+  
+### 2. 🗂️ KPT 목록 및 상세 보기
+- KPT 목록: 로그인하지 않은 상태에서도 기존 KPT 목록을 볼 수 있다.
+- KPT 세부 내용: 각 KPT를 클릭하면 'Keep', 'Problem', 'Try'로 구분된 메모들을 볼 수 있다.
 
-## Available Scripts
+### 3. 📝 메모 작성, 수정, 삭제
+- 로그인한 상태에서 각 섹션(Keep, Problem, Try)에 메모를 작성할 수 있다.
+- 메모 작성 시 현재 로그인한 사용자의 닉네임이 자동으로 입력된다.
+- 자신이 작성한 메모만 수정 및 삭제할 수 있다.
+  - 자신이 작성한 메모를 클릭하면 수정과 삭제 버튼이 나타난다.
+  - 수정 버튼을 클릭해 메모를 수정할 수 있으며, 삭제 버튼을 클릭해 메모를 삭제할 수 있다.
+  - 다른 사용자의 메모는 클릭해도 수정/삭제 버튼이 나타나지 않는다.
 
-In the project directory, you can run:
+### 4. ➕ KPT 생성
+- 로그인한 상태에서 헤더에 '새 KPT 작성' 버튼이 표시된다.
+- KPT 제목과 날짜를 입력하여 새로운 KPT를 생성할 수 있다.
+- 생성된 KPT는 메인 페이지의 KPT 목록에 추가된다.
 
-### `npm start`
+### 5. 🚪 로그아웃
+- 로그인한 상태에서 헤더에 '로그아웃' 버튼이 표시된다.
+- 로그아웃 버튼을 클릭해 언제든지 로그아웃할 수 있다.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## 🛠️ 사용 기술
+- React: 컴포넌트 기반의 프론트엔드 라이브러리로, UI를 효율적으로 구성하고 상태 관리를 쉽게 할 수 있다.
+- Local Storage: 브라우저에 데이터를 저장하여 백엔드 없이 KPT 메모와 사용자 정보를 관리하며, 페이지 새로고침 시에도 데이터가 유지된다.
