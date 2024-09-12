@@ -1,8 +1,10 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function CreateKpt() {
   const [title, setTitle] = useState("");
   const [date, setDate] = useState("");
+  const navigate = useNavigate();
 
   const handleCreateKpt = (e) => {
     e.preventDefault();
@@ -37,6 +39,7 @@ function CreateKpt() {
     setTitle("");
     setDate("");
     alert("새 KPT가 성공적으로 추가되었습니다!");
+    navigate("/");
   };
 
   return (
