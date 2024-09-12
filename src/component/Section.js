@@ -88,6 +88,7 @@ function Section({ type, memos, kptId }) {
             backgroundColor: "#fcfcfc",
             padding: "5px 10px",
             cursor: "pointer",
+            minWidth: "30px",
           }}
         >
           작성
@@ -96,7 +97,6 @@ function Section({ type, memos, kptId }) {
       <div
         style={{
           width: "95%",
-          minHeight: "100px",
         }}
       >
         {memoList.map((memo) => (
@@ -134,7 +134,7 @@ function Section({ type, memos, kptId }) {
               backgroundColor: "#fcfcfc",
               padding: "5px 10px",
               cursor: "pointer",
-              width: "34px",
+              minWidth: "30px",
             }}
           >
             추가
