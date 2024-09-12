@@ -5,6 +5,7 @@ function Section({ type, memos, kptId }) {
   const [isWriting, setIsWriting] = useState(false);
   const [newMemo, setNewMemo] = useState("");
   const [memoList, setMemoList] = useState(memos);
+  const [editingMemoId, setEditingMemoId] = useState(null); // 현재 수정 중인 메모의 ID
 
   // 현재 로그인된 사용자의 닉네임 불러오기
   const loggedInUserNickname = localStorage.getItem("loggedInUserNickname");
@@ -56,6 +57,12 @@ function Section({ type, memos, kptId }) {
     setIsWriting(false);
   };
 
+  const handleMemoClick = (id) => {
+    setEditingMemoId((prev) => (prev === id ? null : id)); // 클릭 시 수정/삭제 모드 토글
+    // 마지막으로 클릭된 메모의 id인 prev와 지금 클릭한 id가 같으면 이미 수정 모드이므로 null로 바꿔서 수정모드 종료
+    // 다르면 새로 클린한 메모이므로 그 메모의 id를 editingMemoId로 저장
+  };
+
   const getText = () => {
     if (type === "Keep") {
       return "잘하고 있는 점";
@@ -100,7 +107,14 @@ function Section({ type, memos, kptId }) {
         }}
       >
         {memoList.map((memo) => (
-          <Memo key={memo.id} nickname={memo.nickname} content={memo.content} />
+          <Memo
+            key={memo.id}
+            id={memo.id}
+            nickname={memo.nickname}
+            content={memo.content}
+            onMemoClick={handleMemoClick}
+            isEditing={editingMemoId === memo.id} // 클릭된 메모만 수정, 삭제 버튼 표시
+          />
         ))}
       </div>
       {isWriting && (
