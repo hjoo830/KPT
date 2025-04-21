@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./AuthContext.js";
 import "./App.css";
 
+import Layout from "./component/Layout.js";
 import Header from "./component/Header.js";
 import MainPage from "./page/MainPage.js";
 import Login from "./page/Login.js";
@@ -15,13 +16,15 @@ function App() {
     <AuthProvider>
       <BrowserRouter>
         <Header />
-        <Routes>
-          <Route path="/" element={<MainPage />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/kpt/:id" element={<KptDetailPage />} />
-          <Route path="/createkpt" element={<CreateKpt />} />
-        </Routes>
+        <Layout>
+          <Routes>
+            <Route path="/" element={<MainPage />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/kpt/:id" element={<KptDetailPage />} />
+            <Route path="/createkpt" element={<CreateKpt />} />
+          </Routes>
+        </Layout>
       </BrowserRouter>
     </AuthProvider>
   );
