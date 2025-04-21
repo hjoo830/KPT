@@ -4,14 +4,17 @@ import { useNavigate } from "react-router-dom";
 function MainPage() {
   const [data, setData] = useState([]);
   const navigate = useNavigate();
-  const navKpt = (id) => () => navigate(`/kpt/${id}`);
 
   useEffect(() => {
     const storedData = JSON.parse(localStorage.getItem("kptData")) || [];
     setData(storedData || []);
   }, []);
 
-  return (
+  return data.length === 0 ? (
+    <div style={{ color: "gray", textAlign: "center", paddingTop: "50px" }}>
+      등록된 KPT가 없습니다.
+    </div>
+  ) : (
     <div
       style={{
         display: "flex",
@@ -24,7 +27,7 @@ function MainPage() {
       {data.map((item) => (
         <div
           key={item.id}
-          onClick={navKpt(item.id)} // 함수 전달 방식으로 수정
+          onClick={() => navigate(`/kpt/${item.id}`)}
           style={{
             display: "flex",
             justifyContent: "space-between",
