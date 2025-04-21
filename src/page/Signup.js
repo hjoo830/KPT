@@ -1,5 +1,6 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import bcrypt from "bcryptjs";
 
 function Signup() {
   const [userId, setUserId] = useState("");
@@ -8,7 +9,7 @@ function Signup() {
   const [nickname, setNickname] = useState("");
   const navigate = useNavigate();
 
-  const handleSignup = (e) => {
+  const handleSignup = async (e) => {
     e.preventDefault();
 
     // 비밀번호 일치 확인
@@ -24,12 +25,15 @@ function Signup() {
       return;
     }
 
+    const hashedPassword = await bcrypt.hash(password, 10);
+
     // 사용자 정보 저장
     const user = {
       userId,
-      password,
+      password: hashedPassword,
       nickname,
     };
+
     localStorage.setItem(userId, JSON.stringify(user));
     localStorage.setItem("loggedInUserId", userId);
     alert("회원가입이 완료되었습니다!");

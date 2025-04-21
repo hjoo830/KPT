@@ -1,6 +1,7 @@
 import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "../AuthContext";
+import bcrypt from "bcryptjs";
 
 function Login() {
   const [userId, setUserId] = useState("");
@@ -8,7 +9,7 @@ function Login() {
   const navigate = useNavigate();
   const { login } = useContext(AuthContext);
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
 
     // localStorage에서 사용자 정보 가져오기
@@ -21,7 +22,8 @@ function Login() {
     const user = JSON.parse(storedUser);
 
     // 비밀번호 확인
-    if (user.password !== password) {
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
       alert("비밀번호가 틀렸습니다.");
       return;
     }
